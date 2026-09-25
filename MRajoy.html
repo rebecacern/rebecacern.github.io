@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #1e3c72, #2a5298);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        max-width: 800px;
+        text-align: center;
+        padding: 30px;
+    }
+
+    h1 {
+        margin-bottom: 30px;
+    }
+
+    .quote-box {
+        background: rgba(255,255,255,0.12);
+        backdrop-filter: blur(8px);
+        border-radius: 15px;
+        padding: 30px;
+        font-size: 1.5rem;
+        line-height: 1.5;
+        min-height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 25px;
+    }
+
+    button {
+        font-size: 1.1rem;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        background: #ffcc00;
+        color: #222;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        transform: scale(1.05);
+    }
+
+    .counter {
+        margin-top: 15px;
+        opacity: 0.8;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="quote-box" id="quote">
+        Pulsa el botón para obtener una cita aleatoria.
+    </div>
+
+    <button onclick="randomQuote()">Nueva Frase</button>
+
+
+</div>
+
+<script>
+const quotes = [
+"A veces la mejor decisión es no tomar ninguna decisión, que también es tomar una decisión.",        "Las medidas que tomamos hacen daño a la gente, pero son imprescindibles.",        "Hacemos lo que lo podemos significa lo que exactamente significa hacemos lo que lo podemos.",        "Una cosa es ser solidario, y otra es serlo a cambio de nada.",        "Para mí, ser presidente del país es la pera.",        "Quien me ha impedido cumplir mi programa electoral es la realidad.",        "Si no puedo bajar los gastos y no puedo subir los ingresos, ¿me puede explicar usted cómo se reduce el déficit público? Porque yo confieso que lo desconozco.",        "Uno es lo que es, para bien o para mal; hombre, en la vida siempre intenta uno mejorar, no tiene sentido no hacerlo, pero lo que no se puede ser es lo que no se es.",        "En política uno no siempre consigue lo que se propone.",        "Lo importante ahora es no perder el rumbo ni bajar la intensidad del cambio.",        "Yo trabajo al día 12 horas 40 minutos.",        "Permítame que haga un reconocimiento a la mayoría de españoles que no se manifiesta, que no sale en las portadas de la prensa y que no abre los telediarios.",        "Una España a la que 75 millones de españoles vienen cada año. Por algo será.",        "No pienso dar ni un solo euro de dinero público a los bancos.",        "No se puede ser un optimista absurdo, pero tampoco se puede tener un planteamiento triste o de cenizo porque está fuera de la realidad en este momento.",        "No tocaré sanidad ni la educación.",        "Ni a Hitler ni a Stalin les han nombrado personas non grata en Pontevedra.",        "Las decisiones se toman en el momento de tomarse.",        "Cuanto más sepáis de todo, mejor. Por saber muchísimo no os va a pasar nada malo, luego ya veremos. Si uno es ingeniero o futbolista, se le abren todas las puertas del mundo.",        "España es un gran país que hace cosas importantes y tiene españoles.",        "Por las carreteras tienen que ir coches y de los aeropuertos tienen que salir aviones.",        "Quiero decir sí a los chiringuitos. Nos gustan los chiringuitos. Queremos los chiringuitos. Forman parte de nuestro ser, y mientras este partido exista, habrá chiringuitos en Málaga y en Pontevedra también.",        "Todo lo que se ha publicado es falso, salvo alguna cosa, que es lo que han publicado los medios de comunicación.",        "Exportar es positivo porque vendes lo que produces.",        "Da gusto hablar bien de quien se merece que hablen bien de uno, y de aquel del que uno quiere hablar bien porque se lo merece.",        "No se ganan amigos por la vía de la sustitución sino por la vía de la ampliación.",        "Tenemos que fabricar máquinas que nos permitan seguir fabricando máquinas, porque lo que no van a hacer nunca las máquinas es fabricar máquinas a su vez.",        "Quiero que nuestros socios sean los que son: Merkel y Sarkozy. Y si alguien se quiere ir al Partido Liberal o al Partido Conservador, que se vaya.",        "Estamos hartos de Franco y de la República. Miremos al futuro.",        "Esto no es como el agua que cae del cielo, sin que se sepa exactamente por qué.",        "Me gustaría que el Parlament de Cataluña acatase la ley y volver a la normalidad institucional, económica y social.",        "No sé si el Gobierno asumió riesgos, hizo lo que tenía que hacer y volvería a hacer lo mismo.",        "El Gobierno tiene que estar en la mayor y no en pensar si pierde o gana votos con sus decisiones, ya que una de sus obligaciones es evitar una situación disparatada.",        "Me retracto: daremos todas las batallas para que esas situaciones (brecha salarial por género) sean menores.",        "No hay nada amortizado y esas personas ya no están en la política activa y ya no forman parte del PP.",        "Si las elecciones son hoy yo me quiero presentar, si son dentro de 100 años me temo que mis posibilidades son menores.",        "No es lo mismo que gobierne uno que que gobierne otro. Dicho de otra forma, es muy distinto.",        "La desconfianza de los inversobres.",        "Me ha pasado una cosa verdaderamente notable, que lo he escrito aquí y no entiendo mi letra.",        "Quiero transmitir a los españoles un mensaje de esperanza, ETA es una gran nación. España, perdón, es una gran nación.",        "Es el vecino el que elige al alcalde y es el alcalde el que quiere que sean los vecinos el alcalde.",        "Dije que bajaría los impuestos y los estoy subiendo.",        "Esto no es como el agua que cae del cielo, sin que se sepa exactamente por qué…Un vaso es un vaso y un plato es un plato.",        "En el hipotético caso de que Cataluña se independizara, sus ciudadanos no perderían la nacionalidad española.",        "Haré todo lo que pueda y un poco más de lo que pueda si es que eso es posible, y haré todo lo posible e incluso lo imposible si también lo imposible es posible.",        "¿Ustedes piensan antes de hablar o hablan tras pensar?",        "Cuanto peor mejor para todos y cuanto peor para todos mejor. Mejor para mí el suyo beneficio político.",        "Haré que se cumpla la ley y la Constitución. Ese es mi plan para Cataluña.",        "Infanta Cristina: Estoy convencido de su inocencia; le irá bien.",        "En Cataluña llevo actuando mucho tiempo. Voy a trabajar para incrementar los lazos que siempre han unido a los catalanes y los españoles.",        "El Estado está preparado para cualquier escenario que se pueda producir. La ley se va a cumplir. Un referendo que pone en tela de juicio la soberanía del pueblo español no se va a celebrar. No habrá independencia de ningún territorio español conmigo como presidente.",        "Somos el país de Europa más antiguo y nos unen todo tipo de lazos. España ha sido uno de los países que más ha mejorado en el mundo en los últimos 30 años y nos quedan muchas cosas por hacer.",        "He pedido un informe jurídico para que los excarcelados de ETA no puedan presentarse a elecciones.",        "La legislación penitenciaria tampoco la voy a cambiar y quienes están en la cárcel saben qué tienen que hacer. Es la misma política que cuando estaba en la oposición y es lo más eficaz para conseguir lo que debe ser.",        "La doctrina Parot se ajustaba a la legalidad en su día según los jueces. Tuvo nuestro apoyo y el de muchas personas. Ahora un tribunal europeo ha tomado una decisión que a mí no me gusta, pero tengo que respetar y acatar las decisiones de los tribunales de justicia.",        "Los jueces españoles acatan la decisión de un tribunal superior, y son los mismos que antes los habían condenado y encarcelado. No es justo hacer una crítica de esas personas.",	"Se están produciendo datos positivos. Hay cifras muy importantes como la prima de riesgo o los de crecimiento económico que mueven a la esperanza. Los datos de paro no son satisfactorios, pero sí se ve un cambio de tendencia para ser optimistas este año y el que viene.",	"El comportamiento de la ciudadanía estos dos años ha sido ejemplar. Hemos tomado decisiones complicadas y dolorosas. Muchos españoles lo han entendido y hay otros que no tanto, pero la mayoría cumplieron como ciudadanos y eso nos obliga a muchos en el futuro.",	"No tengo previsto hacer más recortes en el gasto de los que están previstos en los Presupuestos, porque creo que este año vamos a tener una mayor recaudación. Cuando no se hacen reformas corremos el riesgo de encontrarnos con una situación como la que tuvimos en 2011 y 2012.",	"A los ministros con coraje como Montoro, Wert y Gallardón los voy a apoyar siempre.",
+];
+
+let previous = -1;
+
+function randomQuote() {
+    let index;
+
+    do {
+        index = Math.floor(Math.random() * quotes.length);
+    } while (index === previous && quotes.length > 1);
+
+    previous = index;
+
+    document.getElementById("quote").textContent = quotes[index];
+    document.getElementById("counter").textContent =
+        `Rajoyada ${index + 1} de ${quotes.length}`;
+}
+
+randomQuote();
+</script>
+
+</body>
+</html>
